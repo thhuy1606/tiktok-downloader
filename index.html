@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Video Downloader - Download TikTok Videos Without Watermark</title>
+<meta name="description" content="Free TikTok video downloader. Download TikTok videos without watermark in HD quality. Fast, easy, and no registration required.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh}
+header{background:linear-gradient(135deg,#ff0050,#ff4080);padding:15px 20px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-size:1.5rem;font-weight:700;color:#fff;text-decoration:none}
+nav a{color:#fff;text-decoration:none;margin-left:20px;font-size:0.9rem}
+  .hero{text-align:center;padding:60px 20px 40px}
+.hero h1{font-size:2.5rem;margin-bottom:15px;background:linear-gradient(135deg,#ff0050,#ff4080);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{color:#aaa;font-size:1.1rem;margin-bottom:30px}
+  .search-box{max-width:700px;margin:0 auto;display:flex;gap:10px;background:#1a1a1a;border-radius:50px;padding:8px;border:2px solid #333}
+.search-box input{flex:1;background:none;border:none;outline:none;color:#fff;font-size:1rem;padding:8px 15px}
+.search-box button{background:linear-gradient(135deg,#ff0050,#ff4080);color:#fff;border:none;padding:12px 30px;border-radius:50px;cursor:pointer;font-size:1rem;font-weight:600}
+  .result{max-width:700px;margin:20px auto;background:#1a1a1a;border-radius:15px;padding:20px;display:none}
+  .video-info{display:flex;gap:15px;align-items:center;margin-bottom:15px}
+.video-info img{width:120px;height:90px;border-radius:10px;object-fit:cover}
+.video-info h3{font-size:1rem;color:#fff}
+.video-info p{color:#aaa;font-size:0.85rem;margin-top:5px}
+  .download-btn{display:block;width:100%;background:linear-gradient(135deg,#ff0050,#ff4080);color:#fff;border:none;padding:14px;border-radius:10px;cursor:pointer;font-size:1rem;font-weight:600;text-align:center;text-decoration:none;margin-top:10px}
+  .download-btn:hover{opacity:0.9}
+.loading{text-align:center;padding:20px;color:#aaa}
+.error{background:#2a0a0a;border:1px solid #ff0050;border-radius:10px;padding:15px;color:#ff6060;max-width:700px;margin:10px auto;display:none}
+.section{max-width:1000px;margin:0 auto;padding:60px 20px}
+.section h2{font-size:2rem;text-align:center;margin-bottom:40px;background:linear-gradient(135deg,#ff0050,#ff4080);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+.step{background:#1a1a1a;border-radius:15px;padding:25px;text-align:center;border:1px solid #333}
+.step-num{width:50px;height:50px;background:linear-gradient(135deg,#ff0050,#ff4080);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;margin:0 auto 15px}
+  .step h3{margin-bottom:10px;font-size:1.1rem}
+.step p{color:#aaa;font-size:0.9rem}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.feature{background:#1a1a1a;border-radius:15px;padding:20px;border:1px solid #333;text-align:center}
+.feature .icon{font-size:2.5rem;margin-bottom:10px}
+.feature h3{margin-bottom:8px;font-size:1rem}
+.feature p{color:#aaa;font-size:0.85rem}
+.faq-item{background:#1a1a1a;border-radius:12px;margin-bottom:12px;border:1px solid #333;overflow:hidden}
+.faq-q{padding:18px 20px;cursor:pointer;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:#222}
+.faq-a{padding:0 20px 18px;color:#aaa;font-size:0.9rem;line-height:1.6;display:none}
+.faq-a.open{display:block}
+footer{background:#111;text-align:center;padding:30px;color:#555;border-top:1px solid #222}
+footer a{color:#ff4080;text-decoration:none}
+</style>
+</head>
+  <body>
+<header>
+<a href="/" class="logo">&#9660; TikTok Downloader</a>
+  <nav>
+<a href="#how-to-use">How to Use</a>
+<a href="#features">Features</a>
+<a href="#faq">FAQ</a>
+</nav>
+  </header>
+  <div class="hero">
+<h1>TikTok Video Downloader</h1>
+<p>Download TikTok videos without watermark for free. Fast, easy, and no registration needed.</p>
+<div class="search-box">
+  <input type="text" id="urlInput" placeholder="Paste TikTok video link here..." />
+<button onclick="downloadVideo()">Download</button>
+  </div>
+</div>
+<div class="error" id="errorDiv"></div>
+<div class="result" id="resultDiv">
+<div class="loading" id="loadingDiv">Processing your video...</div>
+<div id="videoResult" style="display:none">
+  <div class="video-info">
+<img id="videoThumb" src="" alt="thumbnail" />
+<div>
+<h3 id="videoTitle"></h3>
+<p id="videoAuthor"></p>
+</div>
+</div>
+<a class="download-btn" id="downloadLink" href="#" download>&#11123; Download Video (No Watermark)</a>
+</div>
+</div>
+<div class="section" id="how-to-use">
+<h2>How to Use</h2>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><h3>Copy TikTok Link</h3><p>Open TikTok, find the video you want, tap Share and copy the link.</p></div>
+<div class="step"><div class="step-num">2</div><h3>Paste the Link</h3><p>Paste the copied link into the input box above and click Download.</p></div>
+<div class="step"><div class="step-num">3</div><h3>Download Video</h3><p>Click the Download button to save the video without watermark to your device.</p></div>
+</div>
+</div>
+  <div class="section" id="features">
+<h2>Key Features</h2>
+<div class="features">
+<div class="feature"><div class="icon">&#127775;</div><h3>No Watermark</h3><p>Download clean videos without any TikTok watermark.</p></div>
+<div class="feature"><div class="icon">&#9889;</div><h3>Lightning Fast</h3><p>Our servers process and deliver your video in seconds.</p></div>
+<div class="feature"><div class="icon">&#128244;</div><h3>HD Quality</h3><p>Get videos in the highest available quality.</p></div>
+<div class="feature"><div class="icon">&#128274;</div><h3>100% Free</h3><p>No registration, no payment, no limits.</p></div>
+<div class="feature"><div class="icon">&#128241;</div><h3>All Devices</h3><p>Works perfectly on mobile, tablet, and desktop.</p></div>
+<div class="feature"><div class="icon">&#128272;</div><h3>Secure</h3><p>We don't store your videos or personal data.</p></div>
+</div>
+</div>
+<div class="section" id="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is this service free? <span>+</span></div><div class="faq-a">Yes, our TikTok downloader is completely free to use. No registration or payment required.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I download a TikTok video? <span>+</span></div><div class="faq-a">Copy the video link from TikTok, paste it in the box above, and click Download. Your video will be ready in seconds.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I download videos without watermark? <span>+</span></div><div class="faq-a">Yes! All downloaded videos are watermark-free so you can use them freely.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What video quality can I download? <span>+</span></div><div class="faq-a">We provide the highest available quality for each video, usually HD resolution.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is it safe to use this service? <span>+</span></div><div class="faq-a">Absolutely. We do not store your video links or any personal information. Your privacy is safe.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Which devices are supported? <span>+</span></div><div class="faq-a">Our service works on all devices including iOS, Android, Windows, Mac, and Linux.</div></div>
+</div>
+<footer>
+<p>&copy; 2024 TikTok Downloader. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+<p style="margin-top:8px;font-size:0.8rem">This tool is for personal use only. Please respect content creators' rights.</p>
+</footer>
+<script>
+async function downloadVideo(){
+var url=document.getElementById('urlInput').value.trim();
+if(!url){alert('Please enter a TikTok URL');return;}
+var errDiv=document.getElementById('errorDiv');
+var resDiv=document.getElementById('resultDiv');
+var loadDiv=document.getElementById('loadingDiv');
+var vidRes=document.getElementById('videoResult');
+errDiv.style.display='none';
+resDiv.style.display='block';
+loadDiv.style.display='block';
+vidRes.style.display='none';
+try{
+var resp=await fetch('/api/info',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url})});
+var data=await resp.json();
+if(data.error){throw new Error(data.error);}
+document.getElementById('videoThumb').src=data.thumbnail||'';
+document.getElementById('videoTitle').textContent=data.title||'TikTok Video';
+document.getElementById('videoAuthor').textContent='@'+(data.author||'unknown');
+var dlLink=document.getElementById('downloadLink');
+dlLink.href='/api/proxy?url='+encodeURIComponent(data.video_url);
+loadDiv.style.display='none';
+vidRes.style.display='block';
+}catch(e){
+resDiv.style.display='none';
+errDiv.style.display='block';
+errDiv.textContent='Error: '+e.message;
+}
+}
+document.getElementById('urlInput').addEventListener('keypress',function(e){if(e.key==='Enter')downloadVideo();});
+function toggleFaq(el){
+var ans=el.nextElementSibling;
+var span=el.querySelector('span');
+ans.classList.toggle('open');
+span.textContent=ans.classList.contains('open')?'-':'+';
+}
+</script>
+</body>
+</html>
